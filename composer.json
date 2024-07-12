@@ -1,0 +1,11 @@
+{
+    "name": "felipe/market",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "php": "^8.3.9"
+    }
+}
