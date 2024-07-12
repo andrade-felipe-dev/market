@@ -10,7 +10,7 @@ class ProductRepository implements ProductRepositoryInterface
 {
     public function store(ProductDTO $dto): bool
     {
-        // TODO: Implement store() method.
+
     }
 
     public function update(ProductDTO $dto): bool

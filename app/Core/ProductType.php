@@ -4,59 +4,72 @@ namespace App\Core;
 
 class ProductType 
 {
+  private int $id;
+
   private string $name;
 
-  private string $descrption;
+  private string $description;
 
   private string $category;
 
   private int $tax;
 
-    public function __construct(string $name, string $descrption, string $category, int $tax)
-    {
-        $this->name = $name;
-        $this->descrption = $descrption;
-        $this->category = $category;
-        $this->tax = $tax;
-    }
+  public function __construct(string $name, string $description, string $category, int $tax, $id = 0)
+  {
+      $this->id = $id;
+      $this->name = $name;
+      $this->description = $description;
+      $this->category = $category;
+      $this->tax = $tax;
+  }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
+  public function getId(): int
+  {
+    return $this->id;
+  }
 
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
+  public function setId(int $id): void
+  {
+    $this->id = $id;
+  }
 
-    public function getDescrption(): string
-    {
-        return $this->descrption;
-    }
+  public function getName(): string
+  {
+      return $this->name;
+  }
 
-    public function setDescrption(string $descrption): void
-    {
-        $this->descrption = $descrption;
-    }
+  public function setName(string $name): void
+  {
+      $this->name = $name;
+  }
 
-    public function getCategory(): string
-    {
-        return $this->category;
-    }
+  public function getDescription(): string
+  {
+      return $this->description;
+  }
 
-    public function setCategory(string $category): void
-    {
-        $this->category = $category;
-    }
+  public function setDescription(string $description): void
+  {
+      $this->description = $description;
+  }
 
-    public function getTax(): int
-    {
-        return $this->tax;
-    }
+  public function getCategory(): string
+  {
+      return $this->category;
+  }
 
-    public function setTax(int $tax): void
-    {
-        $this->tax = $tax;
-    }
+  public function setCategory(string $category): void
+  {
+      $this->category = $category;
+  }
+
+  public function getTax(): int
+  {
+      return $this->tax;
+  }
+
+  public function setTax(int $tax): void
+  {
+      $this->tax = $tax;
+  }
 }

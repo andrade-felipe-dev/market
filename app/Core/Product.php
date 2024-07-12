@@ -5,6 +5,8 @@ use \App\Core\ProductType;
 
 class Product 
 {
+  private int $id;
+
   private string $name;
 
   private string $description;
@@ -19,84 +21,94 @@ class Product
 
   private ProductType $productType;
 
-    public function __construct(string $name, string $description, int $priceInCents, string $unit, string $brand, string $observation, ProductType $productType)
-    {
-        $this->name = $name;
-        $this->description = $description;
-        $this->priceInCents = $priceInCents;
-        $this->unit = $unit;
-        $this->brand = $brand;
-        $this->observation = $observation;
-        $this->productType = $productType;
-    }
+  public function __construct(string $name, string $description, int $priceInCents, string $unit, string $brand, string $observation, ProductType $productType)
+  {
+      $this->name = $name;
+      $this->description = $description;
+      $this->priceInCents = $priceInCents;
+      $this->unit = $unit;
+      $this->brand = $brand;
+      $this->observation = $observation;
+      $this->productType = $productType;
+  }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
+  public function getId(): int
+  {
+    return $this->id;
+  }
 
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
+  public function setId(int $id): void
+  {
+    $this->id = $id;
+  }
 
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
+  public function getName(): string
+  {
+      return $this->name;
+  }
 
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
+  public function setName(string $name): void
+  {
+      $this->name = $name;
+  }
 
-    public function getPriceInCents(): int
-    {
-        return $this->priceInCents;
-    }
+  public function getDescription(): string
+  {
+      return $this->description;
+  }
 
-    public function setPriceInCents(int $priceInCents): void
-    {
-        $this->priceInCents = $priceInCents;
-    }
+  public function setDescription(string $description): void
+  {
+      $this->description = $description;
+  }
 
-    public function getUnit(): string
-    {
-        return $this->unit;
-    }
+  public function getPriceInCents(): int
+  {
+      return $this->priceInCents;
+  }
 
-    public function setUnit(string $unit): void
-    {
-        $this->unit = $unit;
-    }
+  public function setPriceInCents(int $priceInCents): void
+  {
+      $this->priceInCents = $priceInCents;
+  }
 
-    public function getBrand(): string
-    {
-        return $this->brand;
-    }
+  public function getUnit(): string
+  {
+      return $this->unit;
+  }
 
-    public function setBrand(string $brand): void
-    {
-        $this->brand = $brand;
-    }
+  public function setUnit(string $unit): void
+  {
+      $this->unit = $unit;
+  }
 
-    public function getObservation(): string
-    {
-        return $this->observation;
-    }
+  public function getBrand(): string
+  {
+      return $this->brand;
+  }
 
-    public function setObservation(string $observation): void
-    {
-        $this->observation = $observation;
-    }
+  public function setBrand(string $brand): void
+  {
+      $this->brand = $brand;
+  }
 
-    public function getProductType(): \App\Core\ProductType
-    {
-        return $this->productType;
-    }
+  public function getObservation(): string
+  {
+      return $this->observation;
+  }
 
-    public function setProductType(\App\Core\ProductType $productType): void
-    {
-        $this->productType = $productType;
-    }
+  public function setObservation(string $observation): void
+  {
+      $this->observation = $observation;
+  }
+
+  public function getProductType(): \App\Core\ProductType
+  {
+      return $this->productType;
+  }
+
+  public function setProductType(\App\Core\ProductType $productType): void
+  {
+      $this->productType = $productType;
+  }
 }

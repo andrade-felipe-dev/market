@@ -1,56 +1,25 @@
-<?php 
+<?php
 
-require __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
+use App\Application\ProductType\ProductTypeDTO;
+use App\Infra\Database;
+use App\Infra\ProductType\ProductTypeRepository;
 
+try {
+  $db = new Database();
+  $productTypeRepository = new ProductTypeRepository($db);
 
-$productType = new \App\Core\ProductType(
-  name: 'tipo',
-  descrption: 'tipo de descrição',
-  category: "teste a",
-  tax: 10
-);
+  $dto = new ProductTypeDTO(
+    id: 0,
+    name: 'type1',
+    description: 'description1',
+    category: 'category1',
+    tax: 10
+  );
 
-$productType2 = new \App\Core\ProductType(
-  name: 'tipo2',
-  descrption: 'tipo 2',
-  category: 'b',
-  tax: 5
-);
+  $result = $productTypeRepository->store($dto);
 
-$product = new \App\Core\Product(
-    name: "teste",
-    description: "descrição teste",
-    priceInCents: 100,
-    unit: "UN",
-    brand: "Marca",
-    observation: "",
-    productType: $productType
-);
-
-$product2 = new \App\Core\Product(
-  name: "teste",
-  description: "descrição teste",
-  priceInCents: 100,
-  unit: "UN",
-  brand: "Marca",
-  observation: "",
-  productType: $productType2
-);
-
-$itemSale = new \App\Core\ItemProduct\ItemProduct(
-  quantity: 1,
-  product: $product
-);
-
-$itemSale2 = new \App\Core\ItemProduct\ItemProduct(
-  quantity: 2,
-  product: $product2
-);
-
-$sale = new \App\Core\Sale\Sale();
-$sale->addItemProduct(
-  itemProduct: $itemSale
-);
-$sale->addItemProduct(
-  itemProduct: $itemSale2
-);
+  echo $result;
+} catch (Exception $e) {
+  echo "Erro: " . $e->getMessage();
+}

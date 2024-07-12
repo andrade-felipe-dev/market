@@ -1,8 +1,26 @@
+volumes:
+  db_data:
+    driver: local
+
 services:
   app:
     container_name: market-backend
-    build: .
+    build: ./environment_development/php/.
     volumes:
       - .:/var/www/html
     ports:
-      - "8080:8080"
+      - 8080:8080
+
+  db:
+    container_name: market-db
+    build: ./environment_development/mysql/.
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: my_sql_user
+      MYSQL_PASSWORD: my_sql_password
+    ports:
+      - 3306:3306
+
