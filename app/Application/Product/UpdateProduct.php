@@ -2,13 +2,11 @@
 
 namespace App\Application\Product;
 
-use App\Infra\Database\Product\ProductRepository;
-
 class UpdateProduct
 {
-  private ProductRepository $productRepository;
+  private ProductRepositoryInterface $productRepository;
 
-  public function __construct(ProductRepository $productRepository)
+  public function __construct(ProductRepositoryInterface $productRepository)
   {
     $this->productRepository = $productRepository;
   }

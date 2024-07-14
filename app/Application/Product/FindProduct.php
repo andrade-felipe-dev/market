@@ -2,7 +2,9 @@
 
 namespace App\Application\Product;
 
-class CreateProduct
+use App\Core\Product;
+
+class FindProduct
 {
   private ProductRepositoryInterface $productRepository;
 
@@ -11,8 +13,8 @@ class CreateProduct
     $this->productRepository = $productRepository;
   }
 
-  public function execute(ProductDTO $dto): bool
+  public function execute(int $id): ?Product
   {
-    return $this->productRepository->store($dto);
+    return $this->productRepository->findById($id);
   }
 }

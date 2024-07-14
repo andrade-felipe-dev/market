@@ -103,13 +103,28 @@ class Product
       $this->observation = $observation;
   }
 
-  public function getProductType(): \App\Core\ProductType
+  public function getProductType(): ProductType
   {
       return $this->productType;
   }
 
-  public function setProductType(\App\Core\ProductType $productType): void
+  public function setProductType(ProductType $productType): void
   {
       $this->productType = $productType;
   }
+
+  public function getAttributes(): array
+  {
+    return [
+      'id' => $this->id,
+      'name' => $this->name,
+      'description' => $this->description,
+      'priceInCents' => $this->priceInCents,
+      'unit' => $this->unit,
+      'brand' => $this->brand,
+      'observation' => $this->observation,
+      'productType' => $this->productType->getAttributes(),
+    ];
+  }
+
 }

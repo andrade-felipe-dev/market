@@ -2,13 +2,11 @@
 
 namespace App\Application\ProductType;
 
-use App\Infra\Database\ProductType\ProductTypeRepository;
-
 class FindAllProductType
 {
-  private ProductTypeRepository $productTypeRepository;
+  private ProductTypeRepositoryInterface $productTypeRepository;
 
-  public function __construct(ProductTypeRepository $productTypeRepository)
+  public function __construct(ProductTypeRepositoryInterface $productTypeRepository)
   {
     $this->productTypeRepository = $productTypeRepository;
   }

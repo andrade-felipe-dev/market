@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS product (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
-    priceInCents INT NOT NULL,
+    price_in_cents INT NOT NULL,
     unit VARCHAR(50),
     brand VARCHAR(100),
     observation TEXT,
@@ -20,14 +20,16 @@ CREATE TABLE IF NOT EXISTS product (
 
 CREATE TABLE IF NOT EXISTS sale (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    priceInCents INT NOT NULL,
-    saleTime DATETIME NOT NULL
+    price_in_cents INT NOT NULL,
+    sale_time DATETIME NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS sale_product (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sale_id INT NOT NULL,
     product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    
     FOREIGN KEY (sale_id) REFERENCES sale(id),
     FOREIGN KEY (product_id) REFERENCES product(id)
 );

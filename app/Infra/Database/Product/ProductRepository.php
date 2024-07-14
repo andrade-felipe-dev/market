@@ -32,7 +32,7 @@ class ProductRepository implements ProductRepositoryInterface
       ':unit' => $dto->unit,
       ':brand' => $dto->brand,
       ':observation' => $dto->observation,
-      ':product_type_id' => $dto->productType->getId()
+      ':product_type_id' => $dto->productTypeId
     ]);
   }
 
@@ -57,7 +57,7 @@ class ProductRepository implements ProductRepositoryInterface
       ':brand' => $dto->brand,
       ':observation' => $dto->observation,
       ':product_type_id' => $dto->productTypeId,
-      ':id' => $dto->productType->getId()
+      ':id' => $dto->id
     ]);
   }
 
@@ -115,7 +115,7 @@ class ProductRepository implements ProductRepositoryInterface
         productType: (new ProductTypeRepository($this->conn))->findById($result['product_type_id']),
         id: $result['id']
       );
-      $products[] = $product;
+      $products[] = $product->getAttributes();
     }
 
     return $products;

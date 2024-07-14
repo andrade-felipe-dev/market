@@ -1,29 +1,56 @@
 <?php 
 namespace App\Core\Sale;
 
-use App\Core\ItemProduct\ItemProduct;
+use App\Core\SaleProduct\SaleProduct;
 
 class Sale
 {
-  private array $totalProducts;
+  private int $id;
 
-  public function __construct()
+  private \DateTime $saleTime;
+
+  public function __construct(\DateTime $saleTime, int $id = 0)
   {
+    $this->saleTime = $saleTime;
+    $this->id = $id;
   }
 
-  public function addItemProduct(ItemProduct $itemProduct): void
+  public function getId(): int
   {
-      $this->totalProducts[] = $itemProduct;
+    return $this->id;
+  }
+
+  public function setId(int $id): void
+  {
+    $this->id = $id;
+  }
+
+  public function getSaleTime(): \DateTime
+  {
+    return $this->saleTime;
+  }
+
+  public function setSaleTime(\DateTime $saleTime): void
+  {
+    $this->saleTime = $saleTime;
+  }
+
+  public function addItemProduct(): void
+  {
   }
 
 
   public function totalSale(): int
   {
-    $total = 0;
-    foreach ($this->totalProducts as $itemProduct) {
-      $total += $itemProduct->getTotalPrice();
-    }
 
-    return $total;
+  }
+
+  public function getAttributes(): array
+  {
+    return [
+      'id' => $this->id,
+      'priceInCents' => $this->priceInCents,
+      'saleTime' => $this->saleTime,
+    ];
   }
 }

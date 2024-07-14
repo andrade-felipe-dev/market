@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Core\ItemProduct;
+namespace App\Core\SaleProduct;
 
 use App\Core\Product;
 
-class ItemProduct
+class SaleProduct
 {
   private int $id;
 
   private int $quantity;
   private Product $product;
 
-  public function __construct(Product $product, $id = 0, $quantity = 1)
+  private int $priceInCents;
+
+  public function __construct(Product $product,int $priceInCents, $id = 0, $quantity = 1)
   {
     $this->product = $product;
     $this->id = $id;
     $this->quantity = $quantity;
+    $this->priceInCents = $priceInCents;
   }
 
   public function getId(): int
@@ -48,11 +51,23 @@ class ItemProduct
       $this->product = $product;
   }
 
+  public function getPriceInCents(): int
+  {
+    return $this->priceInCents;
+  }
+
+  public function setPriceInCents(int $priceInCents): void
+  {
+    $this->priceInCents = $priceInCents;
+  }
+
   public function getTotalPrice(): int
   {
     $totalWithoutTax = $this->quantity * $this->product->getPriceInCents();
-    $calculateTax =  ($this->product->getProductType()->getTax() / 100) * $totalWithoutTax;
+    $calculateTax = ($this->product->getProductType()->getTax() / 100) * $totalWithoutTax;
 
-    return $totalWithoutTax + $calculateTax;
+    $this->priceInCents = $totalWithoutTax + $calculateTax;
+
+    return $this->priceInCents;
   }
 }
