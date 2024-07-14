@@ -2,11 +2,19 @@
 
 namespace App\Application\Product;
 
+use App\Infra\Product\ProductRepository;
+
 class CreateProduct
 {
-    public function execute(ProductDTO $dto): void
-    {
+  private ProductRepository $productRepository;
 
-    }
+  public function __construct(ProductRepository $productRepository)
+  {
+    $this->productRepository = $productRepository;
+  }
 
+  public function execute(ProductDTO $dto): bool
+  {
+    return $this->productRepository->store($dto);
+  }
 }

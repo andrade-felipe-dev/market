@@ -4,21 +4,21 @@ namespace App\Application\Product;
 
 use App\Core\ProductType;
 
-class ProductDTO
+readonly class ProductDTO
 {
-    public readonly int $id;
+    public int $id;
 
-    public readonly string $name;
+    public string $name;
 
-    public readonly string $description;
+    public string $description;
 
-    public readonly int $priceInCents;
+    public int $priceInCents;
 
-    public readonly string $unit;
+    public string $unit;
 
-    public readonly string $brand;
+    public string $brand;
 
-    public readonly string $observation;
+    public string $observation;
 
-    public readonly ProductType $productType;
+    public ProductType $productType;
 }

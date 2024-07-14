@@ -3,18 +3,18 @@
 namespace App\Infra\ProductType;
 
 use App\Application\ProductType\ProductTypeDTO;
-use App\Application\ProductType\ProductTypeInterface;
+use App\Application\ProductType\ProductTypeRepositoryInterface;
 use App\Core\ProductType;
 use App\Infra\Database;
 use PDO;
 
-class ProductTypeRepository implements ProductTypeInterface
+class ProductTypeRepository implements ProductTypeRepositoryInterface
 {
   private PDO $conn;
 
-  public function __construct(Database $database)
+  public function __construct(PDO $conn)
   {
-    $this->conn = $database->getCon();
+    $this->conn = $conn;
   }
 
   public function store(ProductTypeDTO $dto): bool
@@ -32,33 +32,69 @@ class ProductTypeRepository implements ProductTypeInterface
 
   public function update(ProductTypeDTO $dto): bool
   {
-    return false;
+    $sql = "UPDATE product_type SET name = :name, description = :description, category = :category, tax = :tax WHERE id = :id";
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([
+      ':name' => $dto->name,
+      ':description' => $dto->description,
+      ':category' => $dto->category,
+      ':tax' => $dto->tax,
+      ':id' => $dto->id,
+    ]);
   }
 
-  public function delete(ProductTypeDTO $product): bool
+
+  public function delete(ProductType $product): bool
   {
-    return false;
+    $sql = "DELETE FROM product_type WHERE id = :id";
+    $stmt = $this->conn->prepare($sql);
+
+    return $stmt->execute([
+      ':id' => $product->getId()
+    ]);
   }
 
   public function findById(int $id): ?ProductType
   {
-    return null;
+    $sql = "SELECT * FROM product_type WHERE id = :id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([':id' => $id]);
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($result === false) {
+      return null;
+    }
+
+    return new ProductType(
+      name: $result['name'],
+      description: $result['description'],
+      category: $result['category'],
+      tax: $result['tax'],
+      id: $result['id']
+    );
   }
 
-  public function list(): array
+  public function findAll(): array
   {
-//    $sql = "SELECT * FROM product_type";
-//    $stmt = $this->conn->prepare($sql);
-//    $rows = $stmt->fetchAll(PDO::FETCH_CLASS, ProductType::class);
-//    $productTypes = [];
-//
-//    foreach ($rows as $row) {
-//      $productType = new ProductType(
-//
-//      );
-//    }
+    $sql = "SELECT * FROM product_type";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
 
-    return [];
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $productTypes = [];
+    foreach ($results as $result) {
+      $productTypes[] = new ProductType(
+        name: $result['name'],
+        description: $result['description'],
+        category: $result['category'],
+        tax: $result['tax'],
+        id: $result['id']
+      );
+    }
+
+    return $productTypes;
   }
-
 }

@@ -21,7 +21,7 @@ class Product
 
   private ProductType $productType;
 
-  public function __construct(string $name, string $description, int $priceInCents, string $unit, string $brand, string $observation, ProductType $productType)
+  public function __construct(string $name, string $description, int $priceInCents, string $unit, string $brand, string $observation, ProductType $productType, int $id = 0)
   {
       $this->name = $name;
       $this->description = $description;
@@ -30,6 +30,7 @@ class Product
       $this->brand = $brand;
       $this->observation = $observation;
       $this->productType = $productType;
+      $this->id = $id;
   }
 
   public function getId(): int

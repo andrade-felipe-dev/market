@@ -4,12 +4,12 @@ namespace App\Application\ProductType;
 
 use App\Core\ProductType;
 
-interface ProductTypeInterface
+interface ProductTypeRepositoryInterface
 {
   public function store(ProductTypeDTO $dto): bool;
   public function update(ProductTypeDTO $dto): bool;
-  public function delete(ProductTypeDTO $product): bool;
+  public function delete(ProductType $product): bool;
   public function findById(int $id): ?ProductType;
 
-  public function list(): array;
+  public function findAll(): array;
 }
