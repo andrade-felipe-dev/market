@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"App\\Core\\ItemProduct\\ItemProductTest::testShouldBeGetTotalPriceWithTax":0.001,"App\\Core\\Sale\\SaleTest::testShouldBeGetTotalPriceWithTax":0}}

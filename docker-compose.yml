@@ -7,9 +7,11 @@ services:
     container_name: market-backend
     build: ./environment_development/php/.
     volumes:
-      - .:/var/www/html
+      - ./back-end:/var/www/html
     ports:
       - 8080:8080
+    depends_on:
+      - db
 
   db:
     container_name: market-db
@@ -23,3 +25,14 @@ services:
       MYSQL_PASSWORD: my_sql_password
     ports:
       - 3306:3306
+
+  front:
+    container_name: market-frontend
+    image: oven/bun:1
+    volumes:
+      - ./front-end:/home/bun/app
+    ports:
+      - "3000:3000"
+    command: bun run dev --host=0.0.0.0
+    depends_on:
+      - app

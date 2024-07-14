@@ -6,6 +6,7 @@
         <option value="$PROJECT_DIR$/tests" />
         <option value="$PROJECT_DIR$/environment_development/php/tests" />
         <option value="$PROJECT_DIR$/app" />
+        <option value="$PROJECT_DIR$/back-end/app" />
       </list>
     </option>
   </component>

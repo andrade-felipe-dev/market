@@ -18,7 +18,4 @@ COPY . .
 
 EXPOSE 8080
 
-USER 1000
-
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "/var/www/html"]
-
