@@ -2,7 +2,7 @@
 
 namespace App\Application\Product;
 
-use App\Infra\Product\ProductRepository;
+use App\Infra\Database\Product\ProductRepository;
 
 class CreateProduct
 {

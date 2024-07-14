@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Infra\Product;
+namespace App\Infra\Database\Product;
 
 use App\Application\Product\ProductDTO;
 use App\Application\Product\ProductRepositoryInterface;
 use App\Core\Product;
-use App\Infra\ProductType\ProductTypeRepository;
+use App\Infra\Database\ProductType\ProductTypeRepository;
 use PDO;
 
 class ProductRepository implements ProductRepositoryInterface

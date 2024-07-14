@@ -2,10 +2,8 @@
 
 namespace App\Application\ProductType;
 
-use App\Core\Product;
 use App\Core\ProductType;
-use App\Infra\Product\ProductRepository;
-use App\Infra\ProductType\ProductTypeRepository;
+use App\Infra\Database\ProductType\ProductTypeRepository;
 
 class DeleteProductType
 {

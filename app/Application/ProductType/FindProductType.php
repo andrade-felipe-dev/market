@@ -2,9 +2,10 @@
 
 namespace App\Application\ProductType;
 
+use App\Core\ProductType;
 use App\Infra\Database\ProductType\ProductTypeRepository;
 
-class UpdateProductType
+class FindProductType
 {
   private ProductTypeRepository $productTypeRepository;
 
@@ -13,9 +14,8 @@ class UpdateProductType
     $this->productTypeRepository = $productTypeRepository;
   }
 
-
-  public function execute(ProductTypeDTO $dto): bool
+  public function execute(int $id): ?ProductType
   {
-      return $this->productTypeRepository->update($dto);
+    return $this->productTypeRepository->findById($id);
   }
 }

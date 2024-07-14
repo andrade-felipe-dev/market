@@ -13,7 +13,7 @@ readonly class ProductTypeDTO
 
   public int $tax;
 
-  public function __construct(int $id, string $name, string $description, string $category, int $tax)
+  public function __construct(string $name, string $description, string $category, int $tax, int $id = 0)
   {
     $this->id = $id;
     $this->name = $name;

@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Infra\ProductType;
+namespace App\Infra\Database\ProductType;
 
 use App\Application\ProductType\ProductTypeDTO;
 use App\Application\ProductType\ProductTypeRepositoryInterface;
 use App\Core\ProductType;
-use App\Infra\Database;
 use PDO;
 
 class ProductTypeRepository implements ProductTypeRepositoryInterface
@@ -86,13 +85,15 @@ class ProductTypeRepository implements ProductTypeRepositoryInterface
 
     $productTypes = [];
     foreach ($results as $result) {
-      $productTypes[] = new ProductType(
+      $productType = new ProductType(
         name: $result['name'],
         description: $result['description'],
         category: $result['category'],
         tax: $result['tax'],
         id: $result['id']
       );
+
+      $productTypes[] = $productType->getAttributes();
     }
 
     return $productTypes;

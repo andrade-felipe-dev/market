@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Infra;
+namespace App\Infra\Database;
 
-use PDO;
+use App\Infra\PDOException;
 use Exception;
+use PDO;
 
 class Database {
   private $host = 'market-db'; // Nome do serviço do MySQL no docker-compose

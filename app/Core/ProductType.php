@@ -72,4 +72,15 @@ class ProductType
   {
       $this->tax = $tax;
   }
+
+  public function getAttributes(): array
+  {
+    return [
+      'id' => $this->id,
+      'name' => $this->name,
+      'description' => $this->description,
+      'category' => $this->category,
+      'tax' => $this->tax,
+    ];
+  }
 }

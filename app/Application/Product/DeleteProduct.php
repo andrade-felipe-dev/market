@@ -3,7 +3,7 @@
 namespace App\Application\Product;
 
 use App\Core\Product;
-use App\Infra\Product\ProductRepository;
+use App\Infra\Database\Product\ProductRepository;
 
 class DeleteProduct
 {
