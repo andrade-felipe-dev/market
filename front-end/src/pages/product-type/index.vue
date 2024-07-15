@@ -54,7 +54,7 @@
     <template v-slot:item.actions="{ item }">
       <v-icon
         size="small"
-        @click="deleteItem(item)"
+        @click.stop="deleteItem(item)"
       >
         mdi-delete
       </v-icon>
@@ -114,9 +114,8 @@
       async registerForm() {
         this.loadingButton = true;
         try {
-          console.log(this.value);
-
-          if (this.value.id != 0) {
+          if (this.value.id) {
+            console.log(this.value.id);
             await axios.put(`http://localhost:8080/product-type/${this.value.id}`, this.value);
           } else {
             await axios.post('http://localhost:8080/product-type', this.value);
@@ -131,8 +130,7 @@
 
       async deleteItem(row) {
         try {
-          const { data } = await axios.delete(`http://localhost:8080/product-type/${row.id}`)
-          console.log(data)
+          await axios.delete(`http://localhost:8080/product-type/${row.id}`)
         } catch (error) {
           console.log(error)
         } finally {
