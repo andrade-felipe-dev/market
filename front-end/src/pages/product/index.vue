@@ -8,7 +8,7 @@
     :loading="loading = false"
     :search="search"
     item-value="id"
-    @click:row="loadProductType"
+    @click:row="loadProduct"
     @update:options="loadItems"
   >
     <template v-slot:top>
@@ -18,23 +18,50 @@
         </v-btn>
       </div>
       <v-dialog v-model="modal" max-width="600px" max-height="600px" persistent>
-        <v-card title="Cadastrar">
+        <v-card height="550px" title="Cadastrar">
           <v-divider></v-divider>
 
           <v-row class="text-center">
-            <v-col cols="12" class="pa-6 pb-0">
-              <v-text-field v-model="value.name" label="Nome *">
+            <v-col cols="6" class="pa-6 pb-0">
+              <v-text-field :rules="[rules.required]" clearable v-model="value.name" label="Nome *">
               </v-text-field>
             </v-col>
 
-            <v-col cols="12" class="pa-6 pt-0 pb-0">
-              <v-text-field v-model="value.description" label="Descrição">
+            <v-col cols="6" class="pa-6 pb-0">
+              <v-text-field clearable v-model="value.description" label="Descrição">
+              </v-text-field>
+            </v-col>
+
+            <v-col cols="6" class="pa-6 pt-0 pb-1">
+              <v-text-field  v-model="value.priceInCents" label="Preço *" type="number">
+              </v-text-field>
+            </v-col>
+
+            <v-col cols="6" class="pa-6 pt-0 pb-1">
+              <v-text-field clearable v-model="value.unit" label="Unidade">
+              </v-text-field>
+            </v-col>
+
+            <v-col cols="6" class="pa-6 pt-0 pb-1">
+              <v-text-field clearable v-model="value.brand" label="Marca">
+              </v-text-field>
+            </v-col>
+
+            <v-col cols="6" class="pa-6 pt-0 pb-1">
+              <v-text-field clearable v-model="value.observation" label="Observação">
               </v-text-field>
             </v-col>
 
             <v-col cols="12" class="pa-6 pt-0 pb-1">
-              <v-text-field v-model="value.tax" label="Taxa *" type="number">
-              </v-text-field>
+              <v-select
+                :rules="[rules.required]" 
+                item-value="id"
+                item-title="name"
+                v-model="value.productTypeId" 
+                label="Tipos de produto *"
+                :items="productTypes"
+              >
+              </v-select>
             </v-col>
           </v-row>
           <v-divider></v-divider>
@@ -50,6 +77,10 @@
         </v-card>
       </v-dialog>
     </template>  
+
+    <template v-slot:item.priceInCents="{item}"> 
+      {{ formatPriceInCentsToReais(item?.priceInCents) }}
+    </template>
 
     <template v-slot:item.actions="{ item }">
       <v-icon
@@ -82,7 +113,11 @@
       loading: true,
       totalItems: 0,
       modal: false,
-      value: {}
+      value: {},
+      rules: {
+        required: value => !!value || 'Campo é obrigatório!',
+      },
+      productTypes: []
     }),
 
     methods: {
@@ -104,6 +139,7 @@
       },
 
       openModal() {
+        this.loadProductTypes();
         this.modal = true;
       },
 
@@ -113,11 +149,25 @@
         this.loadItems();
       },
 
+      async loadProductTypes() {
+        this.loading = true; 
+        try {
+          const { data } = await axios.get('http://localhost:8080/product-type');
+          this.productTypes = data.data.map(item => ({
+            id: item.id,
+            name: item.name
+          }));
+        } catch (error) {
+          console.log('error'); 
+        } finally {
+          this.loading = false;
+        }
+      },
+
       async registerForm() {
         this.loadingButton = true;
         try {
           if (this.value.id) {
-            console.log(this.value.id);
             await axios.put(`http://localhost:8080/product/${this.value.id}`, this.value);
           } else {
             await axios.post('http://localhost:8080/product', this.value);
@@ -140,16 +190,21 @@
         }
       },
 
-      async loadProductType(e, { item }) {
+      async loadProduct(e, { item }) {
         try {
           const { data } = await axios.get(`http://localhost:8080/product/${item.id}`)
           this.value = data.data
+          this.value.productTypeId = data.data.productType.id
           this.openModal();
         } catch (error) {
           console.log(error)
         }
-      }
+      },
 
+      formatPriceInCentsToReais(priceInCents) {
+        let priceInReais = priceInCents / 100;
+        return priceInReais.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      }
     },
   }
 </script>
