@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'felipe/market',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '5f89a56efb746295f659d00cbc863b8c7c7db74e',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'felipe/market' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '5f89a56efb746295f659d00cbc863b8c7c7db74e',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

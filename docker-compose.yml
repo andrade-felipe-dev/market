@@ -27,12 +27,12 @@ services:
       - 3306:3306
 
   front:
-    container_name: market-frontend
-    image: oven/bun:1
-    volumes:
-      - ./front-end:/home/bun/app
-    ports:
-      - "3000:3000"
-    command: bun run dev --host=0.0.0.0
-    depends_on:
-      - app
+   container_name: market-frontend
+   image: oven/bun:1
+   volumes:
+     - ./front-end:/home/bun/app
+   ports:
+     - "3000:3000"
+   command: bun run dev --host=0.0.0.0
+   depends_on:
+     - app
