@@ -16,6 +16,13 @@ use App\Infra\Http\Request\ProductRequest;
 
 class ProductController
 {
+  private ProductRepository $productRepository;
+
+  public function __construct(Database $db)
+  {
+    $this->productRepository = $db->getCon();
+  }
+
   public function store(Request $request, Response $response): void
   {
     $body = $request::body();
@@ -40,9 +47,7 @@ class ProductController
     );
 
     try {
-      $conn = new Database();
-      $repository = new ProductRepository($conn->getCon());
-      (new CreateProduct($repository))->execute($dto);
+      (new CreateProduct($this->productRepository))->execute($dto);
 
       $response::json([
         'error' => false,
@@ -86,9 +91,7 @@ class ProductController
     );
 
     try {
-      $conn = new Database();
-      $repository = new ProductRepository($conn->getCon());
-      (new UpdateProduct($repository))->execute($dto);
+      (new UpdateProduct($this->productRepository))->execute($dto);
 
       $response::json([
         'error' => false,
@@ -110,9 +113,7 @@ class ProductController
     $id = $urlParam[0];
 
     try {
-      $conn = new Database();
-      $repository = new ProductRepository($conn->getCon());
-      $product = (new FindProduct($repository))->execute($id);
+      $product = (new FindProduct($this->productRepository))->execute($id);
 
       if ($product) {
         $response::json([
@@ -141,12 +142,10 @@ class ProductController
     $id = $urlParam[0];
 
     try {
-      $conn = new Database();
-      $repository = new ProductRepository($conn->getCon());
-      $product = (new FindProduct($repository))->execute($id);
+      $product = (new FindProduct($this->productRepository))->execute($id);
 
       if ($product) {
-        (new DeleteProduct($repository))->execute($product);
+        (new DeleteProduct($this->productRepository))->execute($product);
         $response::json([
           'error' => false,
           'success' => true,
@@ -173,9 +172,7 @@ class ProductController
   public function findAll(Request $request, Response $response): void
   {
     try {
-      $conn = new Database();
-      $repository = new ProductRepository($conn->getCon());
-      $products = (new FindAllProduct($repository))->execute();
+      $products = (new FindAllProduct($this->productRepository))->execute();
 
       $response::json([
         'error' => false,

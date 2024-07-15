@@ -16,6 +16,13 @@ use App\Infra\Http\Request\ProductTypeRequest;
 
 class ProductTypeController
 {
+  private ProductTypeRepository $productTypeRepository;
+
+  public function __construct(Database $db)
+  {
+    $this->productTypeRepository = new ProductTypeRepository($db->getCon());
+  }
+
   public function store(Request $request, Response $response): void
   {
     $body = $request::body();
@@ -38,8 +45,7 @@ class ProductTypeController
     );
 
     try {
-      $conn = new Database();
-      (new CreateProductType(new ProductTypeRepository($conn->getCon())))->execute($dto);
+      (new CreateProductType($this->productTypeRepository))->execute($dto);
       $response::json([
         'error' => false,
         'success' => true,
@@ -79,7 +85,7 @@ class ProductTypeController
     );
     try {
       $conn = new Database();
-      (new UpdateProductType(new ProductTypeRepository($conn->getCon())))->execute($dto);
+      (new UpdateProductType($this->productTypeRepository))->execute($dto);
       $response::json([
         'error' => false,
         'success' => true,
@@ -100,8 +106,7 @@ class ProductTypeController
     $id = $urlParam[0];
 
     try {
-      $conn = new Database();
-      $productType = (new FindProductType(new ProductTypeRepository($conn->getCon())))->execute($id);
+      $productType = (new FindProductType($this->productTypeRepository))->execute($id);
       if ($productType) {
         $response::json([
           'error' => false,
@@ -128,10 +133,9 @@ class ProductTypeController
     $id = $urlParam[0];
 
     try {
-      $conn = new Database();
-      $productType = (new FindProductType(new ProductTypeRepository($conn->getCon())))->execute($id);
+      $productType = (new FindProductType($this->productTypeRepository))->execute($id);
       if ($productType) {
-        (new DeleteProductType(new ProductTypeRepository($conn->getCon())))->execute($productType);
+        (new DeleteProductType($this->productTypeRepository))->execute($productType);
         $response::json([
           'error' => false,
           'success' => true,
@@ -158,8 +162,7 @@ class ProductTypeController
   public function findAll(Request $request, Response $response): void
   {
     try {
-      $conn = new Database();
-      $productsType = (new FindAllProductType(new ProductTypeRepository($conn->getCon())))->execute();
+      $productsType = (new FindAllProductType($this->productTypeRepository))->execute();
 
       $response::json([
         'error' => false,

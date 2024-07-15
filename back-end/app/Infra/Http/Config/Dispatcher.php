@@ -2,6 +2,7 @@
 
 namespace App\Infra\Http\Config;
 
+use App\Infra\Database\Database;
 use App\Infra\Http\Config\Response;
 
 class Dispatcher
@@ -27,7 +28,7 @@ class Dispatcher
 
         [$controller, $action] = explode('@', $route['action']);
         $controller = $prefixController . $controller;
-        $extendController = new $controller;
+        $extendController = new $controller(new Database());
         $extendController->$action(new Request, new Response, $matches);
         return;
       }

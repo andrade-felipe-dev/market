@@ -12,6 +12,13 @@ use App\Infra\Http\Request\SaleRequest;
 
 class SaleController
 {
+  private SaleRepository $saleRepository;
+
+  public function __construct(Database $db)
+  {
+    $this->saleRepository = new SaleRepository($db->getCon());
+  }
+
   public function store(Request $request, Response $response)
   {
     $body = $request::body();
@@ -32,12 +39,12 @@ class SaleController
     );
 
     try {
-      $conn = new Database();
-      $repository = new SaleRepository($conn->getCon());
-      (new CreateSale($repository))->execute($dto);
-      foreach ($dto->saleProducts as $product) {
+      $saleId = (new CreateSale($this->saleRepository))->execute($dto);
 
+      foreach ($validateData['products'] as $productData) {
+        $this->insertSaleProduct($saleId, $productData['id'], $productData['quantity']);
       }
+
     } catch (\Exception $e) {
       $response::json([
         'error' => true,
@@ -45,8 +52,6 @@ class SaleController
         'message' => $e->getMessage()
       ]);
     }
-
-
   }
 
 }

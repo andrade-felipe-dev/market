@@ -17,6 +17,4 @@ class CreateSale
   {
     return $this->saleRepository->store($dto);
   }
-
-
 }

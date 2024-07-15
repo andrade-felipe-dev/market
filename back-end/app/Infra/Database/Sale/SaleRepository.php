@@ -15,14 +15,21 @@ class SaleRepository implements SaleRepositoryInterface
     $this->conn = $conn;
   }
 
-  public function store(SaleDTO $dto): bool
+  public function store(SaleDTO $dto): ?int
   {
     $sql = "INSERT INTO sale(price_in_cents, sale_time) VALUES (:price_in_cents, :sale_time)";
     $smt = $this->conn->prepare($sql);
 
-    return $smt->execute([
+    $success = $smt->execute([
       ':sale_time' => $dto->saleTime
     ]);
+
+    if ($success) {
+      $saleId = $this->conn->lastInsertId();
+      return (int) $saleId;
+    }
+
+    return null;
   }
 
   public function update(SaleDTO $dto): bool
