@@ -71,7 +71,6 @@
       headers: [
         { title: 'Nome', align: 'name', key: 'name' },
         { title: 'Descrição', key: 'description' },
-        { title: 'Categoria', key: 'category' },
         { title: 'Taxa', key: 'tax' },
         { key: 'actions'}
       ],

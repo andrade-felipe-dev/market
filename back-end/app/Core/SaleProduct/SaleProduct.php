@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Core\SaleProduct;
 
 use App\Core\Product;
@@ -59,15 +58,5 @@ class SaleProduct
   public function setPriceInCents(int $priceInCents): void
   {
     $this->priceInCents = $priceInCents;
-  }
-
-  public function getTotalPrice(): int
-  {
-    $totalWithoutTax = $this->quantity * $this->product->getPriceInCents();
-    $calculateTax = ($this->product->getProductType()->getTax() / 100) * $totalWithoutTax;
-
-    $this->priceInCents = $totalWithoutTax + $calculateTax;
-
-    return $this->priceInCents;
   }
 }

@@ -5,6 +5,7 @@ namespace App\Infra\Database\Sale;
 use App\Application\Sale\SaleDTO;
 use App\Application\Sale\SaleRepositoryInterface;
 use App\Core\Sale\Sale;
+use Carbon\Carbon;
 
 class SaleRepository implements SaleRepositoryInterface
 {
@@ -17,11 +18,11 @@ class SaleRepository implements SaleRepositoryInterface
 
   public function store(SaleDTO $dto): ?int
   {
-    $sql = "INSERT INTO sale(price_in_cents, sale_time) VALUES (:price_in_cents, :sale_time)";
+    $sql = "INSERT INTO sale(sale_time) VALUES (:saleTime)";
     $smt = $this->conn->prepare($sql);
 
     $success = $smt->execute([
-      ':sale_time' => $dto->saleTime
+      ':saleTime' => $dto->saleTime
     ]);
 
     if ($success) {
@@ -34,7 +35,7 @@ class SaleRepository implements SaleRepositoryInterface
 
   public function update(SaleDTO $dto): bool
   {
-    $sql = "UPDATE sale SET :price_in_cents = :sale_time WHERE id = :id";
+    $sql = "UPDATE sale SET sale_time = :saleTime WHERE id = :id";
     $smt = $this->conn->prepare($sql);
 
     return $smt->execute([
@@ -68,8 +69,8 @@ class SaleRepository implements SaleRepositoryInterface
     }
 
     return new Sale(
-      saleTime: $result['sale_time'],
-      id: $result['id']
+      saleTime: Carbon::createFromFormat('Y-m-d H:i:s', $result['sale_time']),
+      id: $result['id'],
     );
   }
 
@@ -83,7 +84,7 @@ class SaleRepository implements SaleRepositoryInterface
     $sales = [];
     foreach ($results as $result) {
       $sale = new Sale(
-        saleTime: $result['sale_time'],
+        saleTime: Carbon::createFromFormat('Y-m-d H:i:s', $result['sale_time']),
         id: $result['id']
       );
 

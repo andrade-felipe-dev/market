@@ -10,16 +10,13 @@ class ProductType
 
   private string $description;
 
-  private string $category;
-
   private int $tax;
 
-  public function __construct(string $name, string $description, string $category, int $tax, $id = 0)
+  public function __construct(string $name, string $description, int $tax, $id = 0)
   {
       $this->id = $id;
       $this->name = $name;
       $this->description = $description;
-      $this->category = $category;
       $this->tax = $tax;
   }
 
@@ -53,16 +50,6 @@ class ProductType
       $this->description = $description;
   }
 
-  public function getCategory(): string
-  {
-      return $this->category;
-  }
-
-  public function setCategory(string $category): void
-  {
-      $this->category = $category;
-  }
-
   public function getTax(): int
   {
       return $this->tax;
@@ -79,7 +66,6 @@ class ProductType
       'id' => $this->id,
       'name' => $this->name,
       'description' => $this->description,
-      'category' => $this->category,
       'tax' => $this->tax,
     ];
   }

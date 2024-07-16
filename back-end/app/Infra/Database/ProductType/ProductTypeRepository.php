@@ -18,26 +18,24 @@ class ProductTypeRepository implements ProductTypeRepositoryInterface
 
   public function store(ProductTypeDTO $dto): bool
   {
-    $sql = "INSERT INTO product_type (name, description, category, tax) VALUES (:name, :description, :category, :tax)";
+    $sql = "INSERT INTO product_type (name, description, tax) VALUES (:name, :description, :tax)";
     $stmt = $this->conn->prepare($sql);
 
     return $stmt->execute([
       ':name' => $dto->name,
       ':description' => $dto->description,
-      ':category' => $dto->category,
       ':tax' => $dto->tax
     ]);
   }
 
   public function update(ProductTypeDTO $dto): bool
   {
-    $sql = "UPDATE product_type SET name = :name, description = :description, category = :category, tax = :tax WHERE id = :id";
+    $sql = "UPDATE product_type SET name = :name, description = :description, tax = :tax WHERE id = :id";
     $stmt = $this->conn->prepare($sql);
 
     return $stmt->execute([
       ':name' => $dto->name,
       ':description' => $dto->description,
-      ':category' => $dto->category,
       ':tax' => $dto->tax,
       ':id' => $dto->id,
     ]);
@@ -69,7 +67,6 @@ class ProductTypeRepository implements ProductTypeRepositoryInterface
     return new ProductType(
       name: $result['name'],
       description: $result['description'],
-      category: $result['category'],
       tax: $result['tax'],
       id: $result['id']
     );
@@ -88,7 +85,6 @@ class ProductTypeRepository implements ProductTypeRepositoryInterface
       $productType = new ProductType(
         name: $result['name'],
         description: $result['description'],
-        category: $result['category'],
         tax: $result['tax'],
         id: $result['id']
       );

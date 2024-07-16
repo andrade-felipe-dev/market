@@ -2,9 +2,7 @@
 
 namespace App\Application\Sale;
 
-use App\Core\Sale\Sale;
-
-class CreateSale
+class UpdateSale
 {
   private SaleRepositoryInterface $saleRepository;
 
@@ -13,8 +11,8 @@ class CreateSale
     $this->saleRepository = $saleRepository;
   }
 
-  public function execute(SaleDTO $dto): int
+  public function execute(SaleDTO $dto): bool
   {
-    return $this->saleRepository->store($dto);
+    return $this->saleRepository->update($dto);
   }
 }

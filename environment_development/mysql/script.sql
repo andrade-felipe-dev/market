@@ -2,7 +2,6 @@ CREATE TABLE IF NOT EXISTS product_type (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
-    category VARCHAR(255),
     tax INT NOT NULL
 );
 
@@ -20,7 +19,6 @@ CREATE TABLE IF NOT EXISTS product (
 
 CREATE TABLE IF NOT EXISTS sale (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    price_in_cents INT NOT NULL,
     sale_time DATETIME NOT NULL
 );
 
@@ -29,7 +27,8 @@ CREATE TABLE IF NOT EXISTS sale_product (
     sale_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,
-    
+    price_in_cents INT NOT NULL,
+
     FOREIGN KEY (sale_id) REFERENCES sale(id),
     FOREIGN KEY (product_id) REFERENCES product(id)
 );

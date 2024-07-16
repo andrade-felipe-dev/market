@@ -1,14 +1,12 @@
 <?php 
 namespace App\Core\Sale;
 
-use App\Core\SaleProduct\SaleProduct;
-
 class Sale
 {
   private int $id;
 
   private \DateTime $saleTime;
-
+  
   public function __construct(\DateTime $saleTime, int $id = 0)
   {
     $this->saleTime = $saleTime;
@@ -35,22 +33,11 @@ class Sale
     $this->saleTime = $saleTime;
   }
 
-  public function addItemProduct(): void
-  {
-  }
-
-
-  public function totalSale(): int
-  {
-
-  }
-
   public function getAttributes(): array
   {
     return [
       'id' => $this->id,
-      'priceInCents' => $this->priceInCents,
-      'saleTime' => $this->saleTime,
+      'saleTime' => $this->saleTime
     ];
   }
 }

@@ -15,11 +15,11 @@ class ProductRequest
         'productTypeId' => 'required'
       ], [
         'name' => $data['name'],
-        'description' => $data['description'],
+        'description' => $data['description'] ?? '',
         'priceInCents' => $data['priceInCents'],
-        'unit' => $data['unit'],
-        'brand' => $data['brand'],
-        'observation' => $data['observation'],
+        'unit' => $data['unit'] ?? '',
+        'brand' => $data['brand'] ?? '',
+        'observation' => $data['observation'] ?? '',
         'productTypeId' => $data['productTypeId']
       ]);
     } catch (\Exception $e) {

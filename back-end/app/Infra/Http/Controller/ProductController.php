@@ -20,7 +20,7 @@ class ProductController
 
   public function __construct(Database $db)
   {
-    $this->productRepository = $db->getCon();
+    $this->productRepository = new ProductRepository($db->getCon());
   }
 
   public function store(Request $request, Response $response): void
@@ -37,13 +37,13 @@ class ProductController
     }
 
     $dto = new ProductDTO(
-      name: $body['name'],
-      description: $body['description'],
-      priceInCents: $body['priceInCents'],
-      unit: $body['unit'],
-      brand: $body['brand'],
-      observation: $body['observation'],
-      productTypeId: $body['productTypeId']
+      name: $validateData['name'],
+      description: $validateData['description'],
+      priceInCents: $validateData['priceInCents'],
+      unit: $validateData['unit'],
+      brand: $validateData['brand'],
+      observation: $validateData['observation'],
+      productTypeId: $validateData['productTypeId']
     );
 
     try {
@@ -60,7 +60,7 @@ class ProductController
         'error' => true,
         'success' => false,
         'message'=> $e->getMessage()
-      ]);
+      ], 400);
     }
   }
 
@@ -80,13 +80,13 @@ class ProductController
     }
 
     $dto = new ProductDTO(
-      name: $body['name'],
-      description: $body['description'],
-      priceInCents: $body['priceInCents'],
-      unit: $body['unit'],
-      brand: $body['brand'],
-      observation: $body['observation'],
-      productTypeId: $body['productTypeId'],
+      name: $validateData['name'],
+      description: $validateData['description'],
+      priceInCents: $validateData['priceInCents'],
+      unit: $validateData['unit'],
+      brand: $validateData['brand'],
+      observation: $validateData['observation'],
+      productTypeId: $validateData['productTypeId'],
       id: $id
     );
 
@@ -104,13 +104,13 @@ class ProductController
         'error' => true,
         'success' => false,
         'message'=> $e->getMessage()
-      ]);
+      ], 400);
     }
   }
 
   public function find(Request $request, Response $response, array $urlParam): void
   {
-    $id = $urlParam[0];
+      $id = $urlParam[0];
 
     try {
       $product = (new FindProduct($this->productRepository))->execute($id);
@@ -124,7 +124,8 @@ class ProductController
         return;
       }
 
-      $response::json(['error' => false,
+      $response::json([
+        'error' => false,
         'success' => true,
         'data' => []
       ]);
@@ -158,7 +159,7 @@ class ProductController
       $response::json([
         'error' => true,
         'success' => false,
-        'data' => 'Product not found!'
+        'message' => 'Product not found!'
       ], 400);
     } catch (\Exception $e) {
       $response::json([

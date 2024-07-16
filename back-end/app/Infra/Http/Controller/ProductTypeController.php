@@ -40,7 +40,6 @@ class ProductTypeController
     $dto = new ProductTypeDTO(
       name: $validateData['name'],
       description: $validateData['description'],
-      category: $validateData['category'],
       tax: $validateData['tax'],
     );
 
@@ -79,7 +78,6 @@ class ProductTypeController
     $dto = new ProductTypeDTO(
       name: $validateData['name'],
       description: $validateData['description'],
-      category: $validateData['category'],
       tax: $validateData['tax'],
       id: $id,
     );

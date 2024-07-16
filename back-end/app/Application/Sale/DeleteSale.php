@@ -4,7 +4,7 @@ namespace App\Application\Sale;
 
 use App\Core\Sale\Sale;
 
-class CreateSale
+class DeleteSale
 {
   private SaleRepositoryInterface $saleRepository;
 
@@ -13,8 +13,8 @@ class CreateSale
     $this->saleRepository = $saleRepository;
   }
 
-  public function execute(SaleDTO $dto): int
+  public function execute(Sale $sale): bool
   {
-    return $this->saleRepository->store($dto);
+    return $this->saleRepository->delete($sale);
   }
 }

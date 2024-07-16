@@ -2,7 +2,7 @@
 
 namespace App\Application\SaleProduct;
 
-readonly class SaleProductDTO
+class SaleProductDTO
 {
   public int $saleId;
 
@@ -10,10 +10,13 @@ readonly class SaleProductDTO
 
   public int $quantity;
 
-  public function __construct(int $saleId, int $productId, int $quantity)
+  public int $priceInCents;
+
+  public function __construct(int $saleId, int $productId, int $quantity, int $priceInCents = 0)
   {
     $this->saleId = $saleId;
     $this->productId = $productId;
     $this->quantity = $quantity;
+    $this->priceInCents = $priceInCents;
   }
 }

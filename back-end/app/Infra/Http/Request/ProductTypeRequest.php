@@ -16,8 +16,7 @@ class ProductTypeRequest
       ], [
         'name' => $data['name'] ?? '',
         'description' => $data['description'] ?? '',
-        'tax' => $data['tax'] ?? '',
-        'category' => $data['category'] ?? ''
+        'tax' => $data['tax'] ?? ''
       ]);
     } catch (\Exception $e) {
       return [
@@ -36,7 +35,6 @@ class ProductTypeRequest
         'name' => $data['name'] ?? '',
         'description' => $data['description'] ?? '',
         'tax' => $data['tax'] ?? '',
-        'category' => $data['category'] ?? ''
       ]);
     } catch (\Exception $e) {
       return [
