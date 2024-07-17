@@ -16,11 +16,11 @@ class ProductRequest
       ], [
         'name' => $data['name'],
         'description' => $data['description'] ?? '',
-        'priceInCents' => $data['priceInCents'],
+        'priceInCents' => $data['priceInCents'] ?? '',
         'unit' => $data['unit'] ?? '',
         'brand' => $data['brand'] ?? '',
         'observation' => $data['observation'] ?? '',
-        'productTypeId' => $data['productTypeId']
+        'productTypeId' => $data['productTypeId'] ?? ''
       ]);
     } catch (\Exception $e) {
       return [

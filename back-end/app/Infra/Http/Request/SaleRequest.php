@@ -13,8 +13,8 @@ class SaleRequest
         'products' => 'required',
         'saleTime' => 'required',
       ], [
-        'products' => $data['products'],
-        'saleTime' => $data['saleTime'],
+        'products' => $data['products'] ?? '',
+        'saleTime' => $data['saleTime'] ?? '',
       ]);
     } catch (\Exception $e) {
       return [
