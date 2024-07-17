@@ -13,7 +13,7 @@ class CreateSale
     $this->saleRepository = $saleRepository;
   }
 
-  public function execute(SaleDTO $dto): int
+  public function execute(SaleInputDTO $dto): int
   {
     return $this->saleRepository->store($dto);
   }

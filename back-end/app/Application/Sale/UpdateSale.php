@@ -11,7 +11,7 @@ class UpdateSale
     $this->saleRepository = $saleRepository;
   }
 
-  public function execute(SaleDTO $dto): bool
+  public function execute(SaleInputDTO $dto): bool
   {
     return $this->saleRepository->update($dto);
   }

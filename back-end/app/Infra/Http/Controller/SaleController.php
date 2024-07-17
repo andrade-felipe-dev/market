@@ -5,7 +5,7 @@ namespace App\Infra\Http\Controller;
 use App\Application\Sale\CreateSale;
 use App\Application\Sale\DeleteSale;
 use App\Application\Sale\FindAllSale;
-use App\Application\Sale\SaleDTO;
+use App\Application\Sale\SaleInputDTO;
 use App\Application\Sale\UpdateSale;
 use App\Application\SaleProduct\CalculatePrice;
 use App\Application\SaleProduct\CreateSaleProduct;
@@ -52,7 +52,7 @@ class SaleController
     }
 
     try {
-      $dto = new SaleDTO(
+      $dto = new SaleInputDTO(
         saleTime: Carbon::createFromFormat('Y-m-d H:i:s', $validateData['saleTime']),
         saleProducts: $validateData['products']
       );
@@ -65,7 +65,7 @@ class SaleController
           saleId: $saleId,
           productId: $product->getId(),
           quantity: $productData['quantity'],
-          priceInCents: (new CalculatePrice())->execute($productData['quantity'], $product)
+          priceInCents: (new CalculatePrice())->execute($productData['quantity'], $product->getPriceInCents(), $product->getProductType()->getTax())
         );
 
         (new CreateSaleProduct($this->saleProductRepository))->execute($productDTO);
@@ -102,7 +102,7 @@ class SaleController
     }
 
     try {
-      $dto = new SaleDTO(
+      $dto = new SaleInputDTO(
         saleTime: Carbon::createFromFormat('Y-m-d H:i:s', $validateData['saleTime']),
         saleProducts: $validateData['products'],
         id: $id
@@ -129,7 +129,7 @@ class SaleController
           saleId: $id,
           productId: $productData['id'],
           quantity: $productData['quantity'],
-          priceInCents: (new CalculatePrice())->execute($productData['quantity'], $product)
+          priceInCents: (new CalculatePrice())->execute($productData['quantity'], $product->getPriceInCents(), $product->getProductType()->getTax())
         );
         (new UpdateSaleProduct($this->saleProductRepository))->execute($dto);
       }

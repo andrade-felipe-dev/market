@@ -10,10 +10,10 @@ class CalculatePrice
   {
   }
 
-  public function execute(int $quantity, Product $product): int
+  public function execute(int $quantity, int $price, int $tax): int
   {
-    $totalWithoutTax = $quantity * $product->getPriceInCents();
-    $calculateTax = ($product->getProductType()->getTax() / 100) * $totalWithoutTax;
+    $totalWithoutTax = $quantity * $price;
+    $calculateTax = ($tax / 100) * $totalWithoutTax;
 
     return $totalWithoutTax + $calculateTax;
   }

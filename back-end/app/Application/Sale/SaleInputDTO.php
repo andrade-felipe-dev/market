@@ -2,7 +2,7 @@
 
 namespace App\Application\Sale;
 
-readonly class SaleDTO
+readonly class SaleInputDTO
 {
   public int $id;
 

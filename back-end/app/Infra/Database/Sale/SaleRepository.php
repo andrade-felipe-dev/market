@@ -2,7 +2,8 @@
 
 namespace App\Infra\Database\Sale;
 
-use App\Application\Sale\SaleDTO;
+use App\Application\Sale\SaleInputDTO;
+use App\Application\Sale\SaleOutputDTO;
 use App\Application\Sale\SaleRepositoryInterface;
 use App\Core\Sale\Sale;
 use Carbon\Carbon;
@@ -16,7 +17,7 @@ class SaleRepository implements SaleRepositoryInterface
     $this->conn = $conn;
   }
 
-  public function store(SaleDTO $dto): ?int
+  public function store(SaleInputDTO $dto): ?int
   {
     $sql = "INSERT INTO sale(sale_time) VALUES (:saleTime)";
     $smt = $this->conn->prepare($sql);
@@ -33,7 +34,7 @@ class SaleRepository implements SaleRepositoryInterface
     return null;
   }
 
-  public function update(SaleDTO $dto): bool
+  public function update(SaleInputDTO $dto): bool
   {
     $sql = "UPDATE sale SET sale_time = :saleTime WHERE id = :id";
     $smt = $this->conn->prepare($sql);
@@ -76,19 +77,21 @@ class SaleRepository implements SaleRepositoryInterface
 
   public function findAll(): array
   {
-    $sql = "SELECT * FROM sale";
+    $sql = "SELECT * FROM sale_total_price_view";
     $smt = $this->conn->prepare($sql);
 
     $smt->execute();
     $results = $smt->fetchAll(\PDO::FETCH_ASSOC);
     $sales = [];
     foreach ($results as $result) {
-      $sale = new Sale(
+
+      $saleDTO = new SaleOutputDTO(
         saleTime: Carbon::createFromFormat('Y-m-d H:i:s', $result['sale_time']),
-        id: $result['id']
+        priceInCents: $result['price_in_cents'],
+        id: $result['id'],
       );
 
-      $sales[] = $sale->getAttributes();
+      $sales[] = $saleDTO->getAttributes();
     }
 
     return $sales;

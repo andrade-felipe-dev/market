@@ -20,3 +20,5 @@ Router::put('/sale/{id}', 'SaleController@update');
 Router::get('/sale/{id}', 'SaleController@findByIdSale');
 Router::get('/sale', 'SaleController@findAll');
 Router::delete('/sale/{id}', 'SaleController@deleteByIdSale');
+
+Router::post('/calculate-price', 'CalculatePriceController@calculate');
