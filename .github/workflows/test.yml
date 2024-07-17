@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Composer Dependencies
         run: |
-          cd backend
+          cd back-end
           composer install --no-interaction --prefer-dist --optimize-autoloader
       - name: Run PHPUNIT Tests
         run: |
