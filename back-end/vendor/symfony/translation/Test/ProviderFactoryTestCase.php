@@ -25,7 +25,7 @@ use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
- * A test case to ease testing a translation provider factory.
+ * A tests case to ease testing a translation provider factory.
  *
  * @author Mathieu Santostefano <msantostefano@protonmail.com>
  */

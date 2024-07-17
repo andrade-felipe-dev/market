@@ -21,10 +21,10 @@ use Symfony\Component\Clock\MockClock;
 use function Symfony\Component\Clock\now;
 
 /**
- * Helps with mocking the time in your test cases.
+ * Helps with mocking the time in your tests cases.
  *
  * This trait provides one self::mockTime() method that freezes the time.
- * It restores the global clock after each test case.
+ * It restores the global clock after each tests case.
  * self::mockTime() accepts either a string (eg '+1 days' or '2022-12-22'),
  * a DateTimeImmutable, or a boolean (to freeze/restore the global clock).
  *

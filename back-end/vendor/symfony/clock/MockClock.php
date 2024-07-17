@@ -14,7 +14,7 @@ namespace Symfony\Component\Clock;
 /**
  * A clock that always returns the same date, suitable for testing time-sensitive logic.
  *
- * Consider using ClockSensitiveTrait in your test cases instead of using this class directly.
+ * Consider using ClockSensitiveTrait in your tests cases instead of using this class directly.
  *
  * @author Nicolas Grekas <p@tchwork.com>
  */

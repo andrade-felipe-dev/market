@@ -4,7 +4,7 @@ namespace App\Infra\Database\Sale;
 
 use App\Application\Sale\SaleDTO;
 use App\Application\Sale\SaleRepositoryInterface;
-use App\Core\Sale\Sale;
+use App\Core\Sale;
 use Carbon\Carbon;
 
 class SaleRepository implements SaleRepositoryInterface

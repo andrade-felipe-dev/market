@@ -2,7 +2,7 @@
 
 namespace App\Application\SaleProduct;
 
-use App\Core\Sale\Sale;
+use Core\Sale;
 
 class DeleteSaleProductBySale
 {

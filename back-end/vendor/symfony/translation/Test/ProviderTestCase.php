@@ -22,7 +22,7 @@ use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
- * A test case to ease testing a translation provider.
+ * A tests case to ease testing a translation provider.
  *
  * @author Mathieu Santostefano <msantostefano@protonmail.com>
  */
