@@ -51,17 +51,17 @@
         {
           title: 'Tipo do Produto',
           value: '/product-type',
-          icon: 'mdi-home',
+          icon: 'mdi-archive-cog',
         },
         {
           title: 'Produto',
           value: '/product',
-          icon: 'mdi-account',
+          icon: 'mdi-archive',
         },
         {
           title: 'Venda',
           value: '/sale',
-          icon: 'mdi-information',
+          icon: 'mdi-cart-percent',
         }
       ],
     }),
