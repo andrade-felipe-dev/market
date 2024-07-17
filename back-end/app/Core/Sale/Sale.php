@@ -1,12 +1,14 @@
 <?php 
 namespace App\Core\Sale;
 
+use App\Core\SaleProduct\SaleProduct;
+
 class Sale
 {
   private int $id;
 
   private \DateTime $saleTime;
-  
+
   public function __construct(\DateTime $saleTime, int $id = 0)
   {
     $this->saleTime = $saleTime;

@@ -59,4 +59,13 @@ class SaleProduct
   {
     $this->priceInCents = $priceInCents;
   }
+
+  public function getAttributes() :array
+  {
+    return [
+      'id' => $this->id,
+      'quantity' => $this->quantity,
+      'priceInCents' => $this->priceInCents,
+    ];
+  }
 }

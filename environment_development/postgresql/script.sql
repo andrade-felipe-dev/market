@@ -1,13 +1,13 @@
 CREATE TABLE IF NOT EXISTS product_type (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     tax INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS product (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+   id SERIAL PRIMARY KEY,
+   name VARCHAR(255) NOT NULL,
     description TEXT,
     price_in_cents INT NOT NULL,
     unit VARCHAR(50),
@@ -18,12 +18,12 @@ CREATE TABLE IF NOT EXISTS product (
 );
 
 CREATE TABLE IF NOT EXISTS sale (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    sale_time DATETIME NOT NULL
+    id SERIAL PRIMARY KEY,
+    sale_time TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS sale_product (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     sale_id INT NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL,

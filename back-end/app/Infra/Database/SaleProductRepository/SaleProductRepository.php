@@ -57,28 +57,50 @@ class SaleProductRepository implements SaleProductRepositoryInterface
     ]);
   }
 
-  public function findBySale(Sale $sale): array
+  public function findBySaleId(int $id): array
   {
+    try {
+      $sql = "SELECT * FROM sale_product WHERE sale_id = :saleId";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute([':saleId' => $id]);
 
-    $sql = "SELECT * FROM sale_product WHERE sale_id = :saleId";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->execute([':saleId' => $sale->getId()]);
+      $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+      $saleProducts = [];
 
-    $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    $saleProducts = [];
+      $productRepository = new ProductRepository($this->conn);
 
-    foreach ($results as $result) {
-      $saleProduct = new SaleProduct(
-        product: (new ProductRepository($this->conn))->findById($result['product_id']),
-        priceInCents: $result['price_in_cents'],
-        id: $result['id'],
-        quantity: $result['quantity'],
-      );
+      foreach ($results as $result) {
+        $product = $productRepository->findById($result['product_id']);
 
-      $saleProducts[] = $saleProduct;
+        if ($product) {
+          $saleProduct = new SaleProduct(
+            product: $product,
+            priceInCents: $result['price_in_cents'],
+            id: $result['id'],
+            quantity: $result['quantity']
+          );
+
+          $saleProducts[] = $saleProduct;
+        }
+      }
+
+      return $saleProducts;
+    } catch (\PDOException $e) {
+      // Handle PDOException (e.g., log error, throw custom exception)
+      // Example:
+      error_log("PDOException: " . $e->getMessage());
+      return []; // Or handle error in a meaningful way
     }
+  }
 
+  public function deleteByProductId(int $id, int $saleId): bool
+  {
+    $sql = "DELETE FROM sale_product WHERE product_id = :productId AND sale_id = :saleId";
+    $stmt = $this->conn->prepare($sql);
 
-    return $saleProducts;
+    return $stmt->execute([
+      ':productId' => $id,
+      ':saleId' => $saleId
+    ]);
   }
 }

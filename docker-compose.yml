@@ -15,16 +15,15 @@ services:
 
   db:
     container_name: market-db
-    build: ./environment_development/mysql/.
+    build: environment_development/postgresql/.
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/postgresql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: my_database
-      MYSQL_USER: my_sql_user
-      MYSQL_PASSWORD: my_sql_password
+      POSTGRES_DB: market_db
+      POSTGRES_USER: my_user
+      POSTGRES_PASSWORD: my_password
     ports:
-      - 3306:3306
+      - 5433:5432
 
   front:
    container_name: market-frontend

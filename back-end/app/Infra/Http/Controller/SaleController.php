@@ -9,7 +9,9 @@ use App\Application\Sale\SaleDTO;
 use App\Application\Sale\UpdateSale;
 use App\Application\SaleProduct\CalculatePrice;
 use App\Application\SaleProduct\CreateSaleProduct;
+use App\Application\SaleProduct\DeleteSaleProductByProductId;
 use App\Application\SaleProduct\DeleteSaleProductBySale;
+use App\Application\SaleProduct\FindBySaleId;
 use App\Application\SaleProduct\SaleProductDTO;
 use App\Application\SaleProduct\UpdateSaleProduct;
 use App\Infra\Database\Database;
@@ -108,8 +110,18 @@ class SaleController
 
       (new UpdateSale($this->saleRepository))->execute($dto);
 
+      $saleProducts = (new FindBySaleId($this->saleProductRepository))->execute($id);
+      $existentsSaleProducts = array_column($saleProducts, 'id');;
+      $productIds = array_column($validateData['products'], 'id');
+      $diff = array_diff($productIds, $existentsSaleProducts);
+
+      foreach ($diff as $productId) {
+        (new DeleteSaleProductByProductId($this->saleProductRepository))->execute($productId, $id);
+      }
+
       foreach ($validateData['products'] as $productData) {
         $product = $this->productRepository->findById($productData['id']);
+
 
         $dto = new SaleProductDTO(
           saleId: $id,
@@ -142,17 +154,17 @@ class SaleController
     try {
       $sale = $this->saleRepository->findById($id);
       if($sale) {
-        $saleProducts = $this->saleProductRepository->findBySale($sale);
-        $totalPrice = 0;
+        $saleProducts = $this->saleProductRepository->findBySaleId($id);
+        $saleAttributes = [];
         foreach ($saleProducts as $saleProduct) {
-          $totalPrice += (new CalculatePrice())->execute($saleProduct->getQuantity(), $saleProduct->getProduct());
+          $saleAttributes[] = $saleProduct->getAttributes();
         }
 
         $response::json([
           'error' => false,
           'success' => true,
           'data' => [
-            'totalPrice' => $totalPrice,
+            'products' => $saleAttributes,
             ...$sale->getAttributes()
           ]
         ]);

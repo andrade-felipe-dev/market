@@ -4,11 +4,14 @@ WORKDIR /var/www/html
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
+    libpq-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN docker-php-ext-install pdo pdo_mysql
+
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+  && docker-php-ext-install pdo pgsql pdo_pgsql
 
 COPY composer.json ./
 

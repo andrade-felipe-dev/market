@@ -7,27 +7,23 @@ use Exception;
 use PDO;
 
 class Database {
-  private $host = 'market-db'; // Nome do serviço do MySQL no docker-compose
-  private $db = 'my_database'; // Nome do banco de dados
-  private $user = 'my_sql_user'; // Usuário do banco de dados
-  private $pass = 'my_sql_password'; // Senha do banco de dados
-  private $charset = 'utf8mb4';
-  private $dsn;
-  private $options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-  ];
+  private $host = 'db';
+  private $db = 'market_db';
+  private $user = 'my_user';
+  private $pass = 'my_password';
 
-  public function __construct() {
-    $this->dsn = "mysql:host={$this->host};dbname={$this->db};charset={$this->charset}";
+  private $port = 5432;
+  private $dsn;
+
+  public function __construct()
+  {
+
   }
 
-  public function getCon() {
-    try {
-      return new PDO($this->dsn, $this->user, $this->pass, $this->options);
-    } catch (PDOException $e) {
-      throw new Exception($e->getMessage());
-    }
+  public static function getCon()
+  {
+    $pdo = new PDO("pgsql:host=db;port=5432;dbname=market_db", "my_user", "my_password");
+
+    return $pdo;
   }
 }

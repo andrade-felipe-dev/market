@@ -13,5 +13,6 @@ interface SaleProductRepositoryInterface
 
   public function deleteBySale(Sale $sale): bool;
 
-  public function findBySale(Sale $sale): array;
+  public function findBySaleId(int $id): array;
+  public function deleteByProductId(int $id, int $saleId): bool;
 }

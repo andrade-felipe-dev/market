@@ -114,7 +114,6 @@
         this.loadingButton = true;
         try {
           if (this.value.id) {
-            console.log(this.value.id);
             await axios.put(`http://localhost:8080/product-type/${this.value.id}`, this.value);
           } else {
             await axios.post('http://localhost:8080/product-type', this.value);

@@ -39,7 +39,7 @@ class SaleRepository implements SaleRepositoryInterface
     $smt = $this->conn->prepare($sql);
 
     return $smt->execute([
-      ':sale_time' => $dto->saleTime,
+      ':saleTime' => $dto->saleTime,
       ':id' => $dto->id
     ]);
   }
