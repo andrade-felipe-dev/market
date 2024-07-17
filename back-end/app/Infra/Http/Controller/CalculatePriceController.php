@@ -13,7 +13,7 @@ class CalculatePriceController
   {
     $body = $request::body();
     $validateData = CalculatePriceRequest::validate($body);
-    
+
     $value = (new CalculatePrice())->execute($validateData['quantity'], $validateData['priceInCents'], $validateData['tax']);
 
     $response::json([
