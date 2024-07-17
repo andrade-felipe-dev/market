@@ -1,9 +1,9 @@
-name: Testes com PHP PEST
+name: Tests
 
 on: ['push', 'pull_request']
 
 jobs:
-  tests-with-pest-unit:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,11 +17,8 @@ jobs:
           tools: composer:v2
           coverage: xdebug
 
-      - name: Install Composer Dependencies
-        run: |
-          cd back-end
-          composer install --no-interaction --prefer-dist --optimize-autoloader
-      - name: Run PHPUNIT Tests
-        run: |
-          cd back-end
-          php vendor/bin/pest
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Tests
+        run: ./vendor/bin/pest
