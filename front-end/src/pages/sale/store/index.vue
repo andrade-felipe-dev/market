@@ -13,7 +13,7 @@
   
       <v-row>
         <v-col v-for="(option, index) in selectedProducts" :key="index" cols="6" class="pa-6 pb-0">
-          <v-card :title="`Nome: ${option.name} - Preço: R${formatPriceInCentsToReais(option.priceInCents)} - Taxa: ${option.productType.tax}%`">
+          <v-card :title="`Nome: ${option.name} - Preço: ${formatPriceInCentsToReais(option.priceInCents)} - Taxa: ${option.productType.tax}%`">
             <v-text-field clearable label="Quantidade *" type="number" v-model="option.quantity">
             </v-text-field>
           </v-card>
@@ -33,8 +33,10 @@ import axios from 'axios';
 
 export default {
   data: () => ({
+    id: null,
     selectedProducts: [],
-    products: []
+    products: [],
+    loadedSale: {}
   }),
 
   computed: {
@@ -47,12 +49,43 @@ export default {
   },
 
   async mounted() {
+    this.id = this.$route.params.id
     await this.loadProducts();
+    if (this.id) {
+      await this.loadSale();
+    }
   },
   
   methods: {
+    async loadSale() {
+      try {
+        const { data } = await axios.get(`http://localhost:8080/sale/${this.id}`);
+        this.loadedSale = data.data
+
+        console.log(this.loadedSale);
+        
+        this.selectedProducts = this.products.filter(product => {
+          let p = this.loadedSale.saleProducts.find(item => item.product.id === product.id)
+          
+          if (p) {
+            product.quantity = p.quantity;
+            product.displayName = `Nome do Produto: ${product.name} - Preço ${this.formatPriceInCentsToReais(product.priceInCents)}`
+            return true;
+          }
+          
+          return false;
+        })
+        console.log(this.selectedProducts);
+      } catch (error) {
+        console.log(error); 
+      } finally {
+        this.loading = false;
+      }
+    },
+
     async save() {
       let formatData = {};
+      
       formatData.products = this.selectedProducts.map(item => ({
         'id': item.id,
         'quantity': parseInt(item.quantity)
@@ -60,13 +93,18 @@ export default {
       formatData.saleTime = this.formatDate()
 
       try {
-        const { data } = await axios.post('http://localhost:8080/sale', formatData);
-        console.log(data)
+        if (!this.id) {
+          console.log('post')
+          const { data } = await axios.post('http://localhost:8080/sale', formatData);
+        } else {
+          console.log('put')
+          const { data } = await axios.put(`http://localhost:8080/sale/${this.id}`, formatData);
+        }
+
         this.backPage();
       } catch(error) {
         console.log(error);
       }
-
     },
 
     async loadProducts() {

@@ -66,6 +66,7 @@ class SaleProduct
       'id' => $this->id,
       'quantity' => $this->quantity,
       'priceInCents' => $this->priceInCents,
+      'product' => $this->product->getAttributes(),
     ];
   }
 }

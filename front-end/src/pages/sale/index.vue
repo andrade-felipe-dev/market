@@ -81,7 +81,7 @@
       },
 
       selectRow(e, { item }) {
-        this.$router.push('/sale/store');
+        this.$router.push({name: 'UpdateStore', params: {'id': item.id }});
       },
 
       closeModal() {

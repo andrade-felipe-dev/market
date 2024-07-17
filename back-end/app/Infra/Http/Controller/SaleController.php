@@ -111,17 +111,19 @@ class SaleController
       (new UpdateSale($this->saleRepository))->execute($dto);
 
       $saleProducts = (new FindBySaleId($this->saleProductRepository))->execute($id);
-      $existentsSaleProducts = array_column($saleProducts, 'id');;
+      $productsIdsExists = [];
+      foreach ($saleProducts as $saleProduct) {
+        $productsIdsExists[] = $saleProduct->getProduct()->getId();
+      }
       $productIds = array_column($validateData['products'], 'id');
-      $diff = array_diff($productIds, $existentsSaleProducts);
+      $diff = array_diff($productIds, $productsIdsExists);
 
       foreach ($diff as $productId) {
         (new DeleteSaleProductByProductId($this->saleProductRepository))->execute($productId, $id);
       }
-
+      
       foreach ($validateData['products'] as $productData) {
         $product = $this->productRepository->findById($productData['id']);
-
 
         $dto = new SaleProductDTO(
           saleId: $id,
@@ -164,7 +166,7 @@ class SaleController
           'error' => false,
           'success' => true,
           'data' => [
-            'products' => $saleAttributes,
+            'saleProducts' => $saleAttributes,
             ...$sale->getAttributes()
           ]
         ]);
