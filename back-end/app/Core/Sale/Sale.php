@@ -1,5 +1,7 @@
 <?php 
-namespace App\Core;
+namespace App\Core\Sale;
+
+use App\Core\SaleProduct\SaleProduct;
 
 class Sale
 {

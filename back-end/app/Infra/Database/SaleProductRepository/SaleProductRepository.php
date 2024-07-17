@@ -4,8 +4,8 @@ namespace App\Infra\Database\SaleProductRepository;
 
 use App\Application\SaleProduct\SaleProductDTO;
 use App\Application\SaleProduct\SaleProductRepositoryInterface;
-use App\Core\Sale;
-use App\Core\SaleProduct;
+use App\Core\Sale\Sale;
+use App\Core\SaleProduct\SaleProduct;
 use App\Infra\Database\Product\ProductRepository;
 
 class SaleProductRepository implements SaleProductRepositoryInterface
@@ -86,8 +86,10 @@ class SaleProductRepository implements SaleProductRepositoryInterface
 
       return $saleProducts;
     } catch (\PDOException $e) {
+      // Handle PDOException (e.g., log error, throw custom exception)
+      // Example:
       error_log("PDOException: " . $e->getMessage());
-      return [];
+      return []; // Or handle error in a meaningful way
     }
   }
 

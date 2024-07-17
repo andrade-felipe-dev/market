@@ -2,6 +2,9 @@
 
 namespace App\Application\SaleProduct;
 
+use App\Core\Sale\Sale;
+use App\Core\SaleProduct\SaleProduct;
+
 class FindBySaleId
 {
   private SaleProductRepositoryInterface $saleProductRepository;

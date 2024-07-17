@@ -2,7 +2,8 @@
 
 namespace App\Application\SaleProduct;
 
-use App\Core\Sale;
+use App\Core\Sale\Sale;
+use App\Core\SaleProduct\SaleProduct;
 
 interface SaleProductRepositoryInterface
 {

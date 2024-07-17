@@ -2,6 +2,8 @@
 
 namespace App\Application\SaleProduct;
 
+use App\Core\SaleProduct\SaleProduct;
+
 class CreateSaleProduct
 {
   private SaleProductRepositoryInterface $saleProductRepository;

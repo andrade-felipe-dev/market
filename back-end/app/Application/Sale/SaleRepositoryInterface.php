@@ -2,7 +2,7 @@
 
 namespace App\Application\Sale;
 
-use App\Core\Sale;
+use App\Core\Sale\Sale;
 
 interface SaleRepositoryInterface
 {
